@@ -1,0 +1,58 @@
+package cpu
+
+import chisel3._
+
+// collect all control signals
+class CtrlSignal extends Bundle {
+    val ctrlJump        = Output(Bool())
+    val ctrlJump_r      = Output(Bool())
+    val ctrlBranch      = Output(Bool())
+    val ctrlRegWrite    = Output(Bool())
+    val ctrlMemRead     = Output(Bool())
+    val ctrlMemWrite    = Output(Bool())
+    val ctrlALUSrc      = Output(Bool())
+    val ctrlMemToReg    = Output(Bool())
+    val ctrlALUOp       = Output(UInt(5.W))
+}
+
+// collect all register addresses
+class RegAddr extends Bundle {
+    val rs1_addr    = Output(UInt(5.W))
+    val rs2_addr    = Output(UInt(5.W))
+    val rd_addr     = Output(UInt(5.W))
+}
+
+// ALUOp values
+object OP_TYPES { 
+    val OP_NOP      = "b00000".U
+    val OP_ADD      = "b00001".U
+    val OP_SUB      = "b00010".U
+    val OP_AND      = "b00011".U
+    val OP_OR       = "b00100".U
+    val OP_XOR      = "b00101".U
+    val OP_SLT      = "b00110".U
+    val OP_SLL      = "b00111".U
+    val OP_SRL      = "b01000".U
+    val OP_SRA      = "b01001".U
+    val OP_BEQ      = "b01010".U
+    val OP_BNE      = "b01011".U
+    val OP_BLT      = "b01100".U
+    val OP_BGE      = "b01101".U
+    val OP_JAL      = "b01110".U
+    val OP_JALR     = "b01111".U
+    val OP_LUI      = "b10000".U
+    val OP_AUIPC    = "b10001".U
+}
+
+// OPcode values
+object OPCODES_TYPES {
+    val OPCODE_R        = "b0110011".U
+    val OPCODE_I        = "b0010011".U
+    val OPCODE_LW       = "b0000011".U
+    val OPCODE_JALR     = "b1100111".U 
+    val OPCODE_LUI      = "b0110111".U 
+    val OPCODE_AUIPC    = "b0010111".U
+    val OPCODE_S        = "b0100011".U
+    val OPCODE_B        = "b1100011".U
+    val OPCODE_JAL      = "b1101111".U
+}
